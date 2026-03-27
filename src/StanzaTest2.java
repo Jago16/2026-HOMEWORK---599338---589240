@@ -1,3 +1,5 @@
+import diadia.Attrezzo;
+import diadia.Stanza;
 
 public class StanzaTest2 {
 

@@ -1,3 +1,4 @@
+import diadia.Stanza;
 
 public class StanzaTest1 {
 

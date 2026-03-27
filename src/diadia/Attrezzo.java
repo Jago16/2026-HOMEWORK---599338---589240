@@ -1,6 +1,4 @@
-
-
-
+package diadia;
 
 /**
  * Una semplice classe che modella un attrezzo.

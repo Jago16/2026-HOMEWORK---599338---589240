@@ -1,6 +1,4 @@
-
-
-
+package diadia;
 
 /**
  * Questa classe modella una partita del gioco
