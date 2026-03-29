@@ -12,26 +12,26 @@ public class Partita {
 
 	static final private int CFU_INIZIALI = 20;
 
-
+	private Stanza stanzaCorrente;
+	private Labirinto labirinto;
 	private boolean finita;
 	private int cfu;
-	
+
 	public Partita(){
-		creaStanze();
+		this.labirinto = new Labirinto();
+		this.stanzaCorrente = this.labirinto.getStanzaIniziale();
 		this.finita = false;
 		this.cfu = CFU_INIZIALI;
 	}
 
-    /**
-     * Crea tutte le stanze e le porte di collegamento
-     */
+
 
 	/**
 	 * Restituisce vero se e solo se la partita e' stata vinta
 	 * @return vero se partita vinta
 	 */
 	public boolean vinta() {
-		return this.getStanzaCorrente()== this.getStanzaVincente();
+		return this.getStanzaCorrente()== this.labirinto.getStanzaVincente();
 	}
 
 	/**
@@ -56,5 +56,13 @@ public class Partita {
 
 	public void setCfu(int cfu) {
 		this.cfu = cfu;		
-	}	
+	}
+
+	public void setStanzaCorrente(Stanza stanzaCorrente) {
+		this.stanzaCorrente = stanzaCorrente;
+	}
+
+	public Stanza getStanzaCorrente() {
+		return this.stanzaCorrente;
+	}
 }
