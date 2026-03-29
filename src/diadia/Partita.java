@@ -10,18 +10,17 @@ package diadia;
 
 public class Partita {
 
-	static final private int CFU_INIZIALI = 20;
 
 	private Stanza stanzaCorrente;
 	private Labirinto labirinto;
+	private Giocatore giocatore;
 	private boolean finita;
-	private int cfu;
 
 	public Partita(){
 		this.labirinto = new Labirinto();
+		this.giocatore = new Giocatore();
 		this.stanzaCorrente = this.labirinto.getStanzaIniziale();
 		this.finita = false;
-		this.cfu = CFU_INIZIALI;
 	}
 
 
@@ -39,7 +38,7 @@ public class Partita {
 	 * @return vero se partita finita
 	 */
 	public boolean isFinita() {
-		return finita || vinta() || (cfu == 0);
+		return finita || vinta() || (this.giocatore.getCfu() == 0);
 	}
 
 	/**
@@ -50,13 +49,6 @@ public class Partita {
 		this.finita = true;
 	}
 
-	public int getCfu() {
-		return this.cfu;
-	}
-
-	public void setCfu(int cfu) {
-		this.cfu = cfu;		
-	}
 
 	public void setStanzaCorrente(Stanza stanzaCorrente) {
 		this.stanzaCorrente = stanzaCorrente;
@@ -65,4 +57,13 @@ public class Partita {
 	public Stanza getStanzaCorrente() {
 		return this.stanzaCorrente;
 	}
+	
+	public Giocatore getGiocatore() {
+		return giocatore;
+	}
+
+	public void setGiocatore(Giocatore giocatore) {
+		this.giocatore = giocatore;
+	}
+
 }
