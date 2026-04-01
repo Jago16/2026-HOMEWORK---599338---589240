@@ -1,4 +1,4 @@
-import diadia.Stanza;
+import it.uniroma3.diadia.Stanza;
 
 public class StanzaTest1 {
 
