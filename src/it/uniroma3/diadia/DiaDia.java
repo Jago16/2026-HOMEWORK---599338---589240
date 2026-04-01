@@ -57,7 +57,7 @@ public class DiaDia {
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire = new Comando(istruzione);
 		if(comandoDaEseguire!=null)
-			if (comandoDaEseguire.getNome()!=null && comandoDaEseguire.getNome().equals("fine")) {
+			if (comandoDaEseguire.getNome()!= null && comandoDaEseguire.getNome().equals("fine")) {
 				this.fine(); 
 				return true;
 			} else if (comandoDaEseguire.getNome()!=null && comandoDaEseguire.getNome().equals("vai"))
