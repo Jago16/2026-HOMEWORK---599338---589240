@@ -29,7 +29,7 @@ public class DiaDia {
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
 	
-	static final private String[] elencoComandi = {"vai", "aiuto", "fine"};
+	static final private String[] elencoComandi = {"vai", "aiuto", "prendi", "posa", "fine"};
 
 	private Partita partita;
 
@@ -64,6 +64,10 @@ public class DiaDia {
 				this.vai(comandoDaEseguire.getParametro());
 			else if (comandoDaEseguire.getNome()!=null && comandoDaEseguire.getNome().equals("aiuto"))
 				this.aiuto();
+			else if (comandoDaEseguire.getNome()!=null && comandoDaEseguire.getNome().equals("prendi"))
+				this.prendi(comandoDaEseguire.getParametro());
+			else if (comandoDaEseguire.getNome()!=null && comandoDaEseguire.getNome().equals("posa"))
+				this.posa(comandoDaEseguire.getParametro());
 			else
 				System.out.println("Comando sconosciuto");
 			if (this.partita.vinta()) {
@@ -83,7 +87,47 @@ public class DiaDia {
 			System.out.print(elencoComandi[i]+" ");
 		System.out.println();
 	}
-
+	
+	/**
+	 * Cerca di prendere un oggetto dalla borsa e lo lascia nella stanza. Se c'e' un oggetto lo posa
+	 * e ne stampa il nome, altrimenti stampa un messaggio di errore
+	 */
+	
+	private void posa(String nomeOggetto) {
+		if(nomeOggetto==null) {
+			System.out.println("Che oggetto vuoi posare?");
+			Scanner scannerDiLinee = new Scanner(System.in);
+			nomeOggetto = scannerDiLinee.nextLine();
+		}
+		if(this.partita.getGiocatore().getBorsa().hasAttrezzo(nomeOggetto) == true) {
+			this.partita.getStanzaCorrente().addAttrezzo(this.partita.getGiocatore().getBorsa().getAttrezzo(nomeOggetto));
+			this.partita.getGiocatore().getBorsa().removeAttrezzo(nomeOggetto);
+			System.out.println("Hai posato l'oggetto " + nomeOggetto);
+		} else {
+			System.out.println("L'oggetto non e' presente nella borsa");
+		}
+	}
+	
+	/**
+	 * Cerca di prendere un oggetto dalla stanza e inserirlo nella borsa. Se c'e' un oggetto lo prende
+	 * e ne stampa il nome, altrimenti stampa un messaggio di errore
+	 */
+	
+	private void prendi(String nomeOggetto) {
+		if(nomeOggetto==null) {
+			System.out.println("Che oggetto vuoi prendere dalla stanza?");
+			Scanner scannerDiLinee = new Scanner(System.in);
+			nomeOggetto = scannerDiLinee.nextLine();
+		}
+		if(this.partita.getStanzaCorrente().hasAttrezzo(nomeOggetto) == true) {
+			this.partita.getGiocatore().getBorsa().addAttrezzo(this.partita.getStanzaCorrente().getAttrezzo(nomeOggetto));
+			this.partita.getStanzaCorrente().removeAttrezzo(this.partita.getStanzaCorrente().getAttrezzo(nomeOggetto));
+			System.out.println("Messo nella borsa: " + nomeOggetto);
+		} else {
+			System.out.println("L'oggetto non e' presente nella stanza");
+		}
+	}
+	
 	/**
 	 * Cerca di andare in una direzione. Se c'e' una stanza ci entra 
 	 * e ne stampa il nome, altrimenti stampa un messaggio di errore
