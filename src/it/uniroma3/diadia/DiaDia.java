@@ -54,21 +54,7 @@ public class DiaDia {
 	 * @return true se l'istruzione e' eseguita e il gioco continua, false altrimenti
 	 */
 	private boolean processaIstruzione(String istruzione) {
-		Comando comandoDaEseguire = new Comando(istruzione);
-		if(comandoDaEseguire!=null)
-			if (comandoDaEseguire.getNome()!= null && comandoDaEseguire.getNome().equals("fine")) {
-				this.fine(); 
-				return true;
-			} else if (comandoDaEseguire.getNome()!=null && comandoDaEseguire.getNome().equals("vai"))
-				this.vai(comandoDaEseguire.getParametro());
-			else if (comandoDaEseguire.getNome()!=null && comandoDaEseguire.getNome().equals("aiuto"))
-				this.aiuto();
-			else if (comandoDaEseguire.getNome()!=null && comandoDaEseguire.getNome().equals("prendi"))
-				this.prendi(comandoDaEseguire.getParametro());
-			else if (comandoDaEseguire.getNome()!=null && comandoDaEseguire.getNome().equals("posa"))
-				this.posa(comandoDaEseguire.getParametro());
-			else
-				this.console.mostraMessaggio("Comando sconosciuto");
+		
 			if (this.partita.vinta()) {
 				this.console.mostraMessaggio("Hai vinto!");
 				return true;
