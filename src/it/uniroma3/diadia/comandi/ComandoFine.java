@@ -2,11 +2,14 @@ package it.uniroma3.diadia.comandi;
 
 import it.uniroma3.diadia.Partita;
 
+import it.uniroma3.diadia.IO;
+
+
 public class ComandoFine implements Comando{
 	
 	@Override
-	public void esegui(Partita partita) {
-		System.out.println("Grazie di aver giocato!");  // si desidera smettere
+	public void esegui(Partita partita, IO console) {
+		console.mostraMessaggio("Grazie di aver giocato!");  // si desidera smettere
 		
 	}
 

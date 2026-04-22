@@ -2,14 +2,18 @@ package it.uniroma3.diadia.comandi;
 
 import it.uniroma3.diadia.Partita;
 
+import it.uniroma3.diadia.IO;
+
+
 public class ComandoGuarda implements Comando{
 
 	@Override
-	public void esegui(Partita partita) {
-		System.out.println("Stanza Corrente: " + partita.getStanzaCorrente());
+	public void esegui(Partita partita, IO console) {
+		
+		console.mostraMessaggio("Stanza Corrente: " + partita.getStanzaCorrente().getDescrizione());
 		if(partita.isFinita() == false) {
-			System.out.println("CFU rimasti: " + partita.getGiocatore().getCfu());
-			System.out.println("Info Borsa: " + partita.getGiocatore().getBorsa());
+			console.mostraMessaggio("CFU rimasti: " + partita.getGiocatore().getCfu());
+			console.mostraMessaggio("Info Borsa: " + partita.getGiocatore().getBorsa());
 		}
 	}
 

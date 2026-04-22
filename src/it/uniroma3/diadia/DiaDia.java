@@ -63,7 +63,7 @@ public class DiaDia {
 			this.console.mostraMessaggio("Hai vinto!");
 		}
 		if (!this.partita.giocatoreIsVivo()) {
-			System.out.println("Hai esaurito i CFU...");
+			this.console.mostraMessaggio("Hai esaurito i CFU...");
 		}
 		return this.partita.isFinita();
 	}  
