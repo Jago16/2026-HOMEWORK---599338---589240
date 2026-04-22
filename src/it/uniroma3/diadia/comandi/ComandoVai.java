@@ -14,7 +14,7 @@ public class ComandoVai implements Comando {
 		this.console = new IOConsole();
 	}
 	@Override
-	public void esegui(Partita partita) {
+	public void esegui(Partita partita, IO console) {
 
 		Stanza stanzaCorrente = partita.getStanzaCorrente();
 		Stanza prossimaStanza = null;
@@ -40,11 +40,11 @@ public class ComandoVai implements Comando {
 	@Override
 	public String getNome() {
 		// TODO Auto-generated method stub
-		return null;
+		return "vai";
 	}
 	@Override
 	public String getParametro() {
 		// TODO Auto-generated method stub
-		return null;
+		return this.direzione;
 	}
 }

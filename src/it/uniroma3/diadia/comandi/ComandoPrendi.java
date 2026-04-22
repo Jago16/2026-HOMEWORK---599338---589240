@@ -12,7 +12,7 @@ public class ComandoPrendi implements Comando{
 		this.console = new IOConsole();
 	}
 	@Override
-	public void esegui(Partita partita) {
+	public void esegui(Partita partita, IO console) {
 
 		if(parametro==null) {
 			this.console.mostraMessaggio("Che oggetto vuoi prendere dalla stanza?");

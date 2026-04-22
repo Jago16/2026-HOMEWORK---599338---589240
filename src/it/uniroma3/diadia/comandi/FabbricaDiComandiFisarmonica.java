@@ -7,7 +7,7 @@ import it.uniroma3.diadia.Partita;
 public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi{
 	
 	@Override
-	public Comando costruisciComando(String istruzione) {
+	public Comando costruisciComando(String istruzione, IO console) {
 		Scanner scannerDiParole = new Scanner(istruzione);
 		String nomeComando = null;
 		String parametro = null;
@@ -22,7 +22,7 @@ public class FabbricaDiComandiFisarmonica implements FabbricaDiComandi{
 			comando = new ComandoNonValido();
 		}
 		else if (nomeComando.equals("vai")) {
-			comando = new ComandoVai();
+			comando = new ComandoVai(null);
 		}
 		else if (nomeComando.equals("prendi")) {
 			comando = new ComandoPrendi(null);
