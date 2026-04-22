@@ -9,5 +9,16 @@ public class ComandoNonValido implements Comando{
 	public void esegui(Partita partita) {
 		io.mostraMessaggio("Comando non valido");
 	}
+	@Override
+	public void setParametro(String parametro) {
+	}
+	@Override
+	public String getNome() {
+		return "ComandoNonValido";
+	}
+	@Override
+	public String getParametro() {
+		return null;
+	}
 
 }

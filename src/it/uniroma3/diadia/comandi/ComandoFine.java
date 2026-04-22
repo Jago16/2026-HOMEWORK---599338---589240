@@ -6,7 +6,22 @@ public class ComandoFine implements Comando{
 	
 	@Override
 	public void esegui(Partita partita) {
-		// TODO Auto-generated method stub
+		System.out.println("Grazie di aver giocato!");  // si desidera smettere
 		
+	}
+
+	@Override
+	public void setParametro(String parametro) {
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public String getNome() {
+		return "fine";
+	}
+
+	@Override
+	public String getParametro() {
+		return null;
 	}
 }
