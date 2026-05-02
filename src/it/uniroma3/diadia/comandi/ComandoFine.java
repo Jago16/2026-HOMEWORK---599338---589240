@@ -10,7 +10,7 @@ public class ComandoFine implements Comando{
 	@Override
 	public void esegui(Partita partita, IO console) {
 		console.mostraMessaggio("Grazie di aver giocato!");  // si desidera smettere
-		
+		partita.setFinita();
 	}
 
 	@Override
