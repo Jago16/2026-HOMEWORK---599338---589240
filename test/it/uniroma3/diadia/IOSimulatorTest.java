@@ -71,7 +71,7 @@ class IOSimulatorTest {
 				"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 				"Per conoscere le istruzioni usa il comando 'aiuto'.", simulatore.getMessaggio(0)); 
 		assertEquals("Stanza Corrente: Atrio\n"
-				+ "Uscite:  nord est sud ovest\n"
+				+ "Uscite:  nord sud est ovest\n"
 				+ "Attrezzi nella stanza: osso (1kg) ", simulatore.getMessaggio(1));
 	
 		assertEquals("CFU rimasti: 20", simulatore.getMessaggio(2));
