@@ -23,10 +23,11 @@ public class StanzaMagicaProtected extends StanzaProtected{
 		this.contatoreAttrezziPosati++;
 		if (this.contatoreAttrezziPosati > this.sogliaMagica)
 			attrezzo = this.modificaAttrezzo(attrezzo);
-//		if (this.numeroAttrezzi<this.attrezzi.length) {
-//			this.attrezzi[this.numeroAttrezzi] = attrezzo;
-//			this.numeroAttrezzi++;
-		return this.attrezzi.add(attrezzo);
+		//		if (this.numeroAttrezzi<this.attrezzi.length) {
+		//			this.attrezzi[this.numeroAttrezzi] = attrezzo;
+		//			this.numeroAttrezzi++;
+		this.attrezzi.put(attrezzo.getNome(), attrezzo);
+		return true;
 	}
 
 	private Attrezzo modificaAttrezzo(Attrezzo attrezzo) {
