@@ -28,7 +28,10 @@ public class Strega extends AbstractPersonaggio{
 
 	@Override
 	public String riceviRegalo(Attrezzo attrezzo, Partita partita) {
-		// TODO Auto-generated method stub
+		if(attrezzo != null) {
+			partita.getGiocatore().getBorsa().removeAttrezzo(attrezzo.getNome());
+			return "AHAHAHAAHAHAHAH" + "-Bravo genio, ti ha rubato l'attrezzo-";
+		}
 		return null;
 	}
 

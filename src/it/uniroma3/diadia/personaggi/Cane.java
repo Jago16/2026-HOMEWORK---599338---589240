@@ -8,8 +8,9 @@ public class Cane extends AbstractPersonaggio{
 	private static final String MESSAGGIO_PRESENTAZIONE = "Bau";
 	private static final String MESSAGGIO_MORSO = "WOF!";
 	
-	public Cane(String nome) {
+	public Cane(String nome, Attrezzo attrezzo) {
 		super(nome, MESSAGGIO_PRESENTAZIONE);
+		this.setAttrezzo(attrezzo);
 	}
 
 	@Override
@@ -20,8 +21,16 @@ public class Cane extends AbstractPersonaggio{
 
 	@Override
 	public String riceviRegalo(Attrezzo attrezzo, Partita partita) {
-		// TODO Auto-generated method stub
-		return null;
+		//Il cibo preferito è l'osso
+		if(attrezzo.getNome().equals("osso")){
+			partita.getStanzaCorrente().addAttrezzo(getAttrezzo());
+			setAttrezzo(partita.getGiocatore().getBorsa().removeAttrezzo(attrezzo.getNome()));
+			return MESSAGGIO_PRESENTAZIONE + "-Il cane ha posato un attrezzo a terra-";
+		}
+		else {
+			//partita.getGiocatore().setCfu(partita.getGiocatore().getCfu() - 1);
+			return agisci(partita) + " -sei stato morso, -1CFU -";
+		}
 	}
 	
 	

@@ -8,7 +8,7 @@ public class ComandoRegala extends AbstractComando{
 	public ComandoRegala(String nomeOggetto) {
 		this.setParametro(nomeOggetto);
 	}
-	
+
 	@Override
 	public void esegui(Partita partita, IO console) {
 		if(partita.getGiocatore().getBorsa().hasAttrezzo(this.getParametro())) {

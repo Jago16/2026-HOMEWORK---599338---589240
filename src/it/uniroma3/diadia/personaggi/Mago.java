@@ -11,12 +11,12 @@ public class Mago extends AbstractPersonaggio{
 	private static final String MESSAGGIO_SCUSE = "Mi spiace, ma non ho piu' nulla...";
 	private static final String MESSAGGIO_PRESENTAZIONE = "Sono un mago e se mi saluterai ti darò un dono";
 	private Attrezzo attrezzo;
-	
+
 	public Mago(String nome, Attrezzo attrezzo) {
 		super(nome, MESSAGGIO_PRESENTAZIONE);
 		this.attrezzo = attrezzo;
 	}
-	
+
 	@Override
 	public String agisci(Partita partita) {
 		String msg;
@@ -33,7 +33,13 @@ public class Mago extends AbstractPersonaggio{
 
 	@Override
 	public String riceviRegalo(Attrezzo attrezzo, Partita partita) {
-		// TODO Auto-generated method stub
+		if(attrezzo != null) {
+			partita.getGiocatore().getBorsa().removeAttrezzo(attrezzo.getNome());
+			attrezzo.setPeso(attrezzo.getPeso() / 2);
+			partita.getStanzaCorrente().addAttrezzo(attrezzo);
+			return "UUU Grazie ma non ne ho bisogno, riprenditelo che te l'ho migliorato!" +
+					"-Il mago ha poggiato di nuovo l'attrezzo nella stanza, ma ora ha il peso dimezzato!-";
+		}
 		return null;
 	}
 }
