@@ -3,16 +3,21 @@ package it.uniroma3.diadia.comandi;
 import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 
-public class ComandoPrendi implements Comando{
-	private String parametro; //Oggetto da prendere
+public class ComandoPrendi extends AbstractComando{
+
 
 
 	public ComandoPrendi(String parametro) {
-		this.parametro = parametro;
+		super.setParametro(parametro);;
 	}
+
+	public ComandoPrendi() {
+		this(null);
+	}
+
 	@Override
 	public void esegui(Partita partita, IO console) {
-
+		String parametro = super.getParametro();
 		if(parametro==null) {
 			console.mostraMessaggio("Che oggetto vuoi prendere dalla stanza?");
 			parametro = console.leggiRiga();
@@ -27,21 +32,9 @@ public class ComandoPrendi implements Comando{
 	}
 
 
-
-
-@Override
-public void setParametro(String parametro) {
-	this.parametro = parametro;
-}
-
-@Override
-public String getNome() {
-	return "prendi";
-}
-
-@Override
-public String getParametro() {
-	return parametro;
-}
+	@Override
+	public String getNome() {
+		return "prendi";
+	}
 
 }

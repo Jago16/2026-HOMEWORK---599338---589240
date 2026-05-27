@@ -10,6 +10,9 @@ public class Labirinto {
 		init();
 	}
 	
+	public Labirinto(boolean b) {
+	}
+	
     private void init() {
 
 		/* crea gli attrezzi */
@@ -56,5 +59,9 @@ public class Labirinto {
 	
 	public void setStanzaIniziale(Stanza stanzaIniziale) {
 		this.stanzaIniziale=stanzaIniziale;
+	}
+	
+	public void setStanzaVincente(Stanza stanzaVincente) {
+		this.stanzaVincente = stanzaVincente;
 	}
 }

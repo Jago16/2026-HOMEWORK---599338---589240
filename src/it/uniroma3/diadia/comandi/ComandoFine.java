@@ -5,7 +5,7 @@ import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.IO;
 
 
-public class ComandoFine implements Comando{
+public class ComandoFine extends AbstractComando{
 	
 	@Override
 	public void esegui(Partita partita, IO console) {
@@ -13,18 +13,10 @@ public class ComandoFine implements Comando{
 		partita.setFinita();
 	}
 
-	@Override
-	public void setParametro(String parametro) {
-		// TODO Auto-generated method stub
-	}
 
 	@Override
 	public String getNome() {
 		return "fine";
 	}
 
-	@Override
-	public String getParametro() {
-		return null;
-	}
 }

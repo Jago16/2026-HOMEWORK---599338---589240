@@ -2,6 +2,7 @@ package it.uniroma3.diadia.giocatore;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.SortedSet;
 import java.util.TreeSet;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-import it.uniroma3.diadia.attrezzi.ComparatorePerPesoENome;
+
 
 public class Borsa {
 	public final static int DEFAULT_PESO_MAX_BORSA = 10;
@@ -94,9 +95,15 @@ public class Borsa {
 	}
 
 	List<Attrezzo> getContenutoOrdinatoPerPeso(){
-		ComparatorePerPesoENome comparatore = new ComparatorePerPesoENome();
 		List<Attrezzo> listaOrdinataPerPeso = new ArrayList<>(this.attrezzi.values());
-		Collections.sort(listaOrdinataPerPeso, comparatore);
+		Collections.sort(listaOrdinataPerPeso, new Comparator<Attrezzo>() {
+			@Override
+			public int compare(Attrezzo a1, Attrezzo a2) {
+				if(a1.getPeso()!= a2.getPeso())
+					return a1.getPeso() - a2.getPeso();
+				return a1.getNome().compareTo(a2.getNome());
+			}
+		});
 		return listaOrdinataPerPeso;
 	}
 
@@ -117,6 +124,19 @@ public class Borsa {
 			}
 		}	
 		return mappaRaggruppataPerPeso;
+	}
+	
+	SortedSet<Attrezzo> getSortedSetOrdinatoPerPeso(){
+		SortedSet<Attrezzo> setOrdinatoPerPeso = new TreeSet<>(new Comparator<Attrezzo>() {
+			@Override
+			public int compare(Attrezzo a1, Attrezzo a2) {
+				if(a1.getPeso()!= a2.getPeso())
+					return a1.getPeso() - a2.getPeso();
+				return a1.getNome().compareTo(a2.getNome());
+			}
+		});
+		setOrdinatoPerPeso.addAll(this.attrezzi.values());
+		return setOrdinatoPerPeso;
 	}
 
 	public String toString() {

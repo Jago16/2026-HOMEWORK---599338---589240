@@ -1,23 +1,18 @@
 package it.uniroma3.diadia.comandi;
 
 import it.uniroma3.diadia.IO;
-
 import it.uniroma3.diadia.Partita;
 
-public class ComandoAiuto extends AbstractComando{
-
+public class ComandoSaluta extends AbstractComando{
 
 	@Override
 	public void esegui(Partita partita, IO console) {
-		for(String nomeComando : super.getElencoCOmandi())
-			console.mostraMessaggio(nomeComando + " ");
-		console.mostraMessaggio("");		
+		console.mostraMessaggio( partita.getStanzaCorrente().getPersonaggio().saluta());
 	}
 
 	@Override
 	public String getNome() {
-		return "aiuto";
+		return "esegui";
 	}
-
 
 }

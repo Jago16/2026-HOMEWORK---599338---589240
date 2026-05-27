@@ -2,12 +2,15 @@ package it.uniroma3.diadia.ambienti;
 
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.Comparator;
 
 import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.personaggi.AbstractPersonaggio;
 
 /**
  * Classe Stanza - una stanza in un gioco di ruolo.
@@ -32,6 +35,7 @@ public class Stanza {
 	//	private String[] direzioni;
 	private Map<String, Attrezzo> attrezzi;
 	private Map<String, Stanza> stanzeAdiacenti;
+	private AbstractPersonaggio personaggio;
 
 	/**
 	 * Crea una stanza. Non ci sono stanze adiacenti, non ci sono attrezzi.
@@ -149,6 +153,9 @@ public class Stanza {
 			if( attrezzo!=null)
 				risultato.append(attrezzo.toString()+" ");
 		}
+		if (this.personaggio != null) {
+		    risultato.append("\nIn questa stanza c'è il personaggio: " + this.personaggio.getNome());
+		}
 		return risultato.toString();
 	}
 
@@ -218,6 +225,47 @@ public class Stanza {
 		//		return direzioni;
 		Set<String> direzioni = this.stanzeAdiacenti.keySet();
 		return direzioni;
+	}
+
+	public Map<String, Stanza> getMapStanzeAdiacenti() {
+		return this.stanzeAdiacenti;
+	}
+	
+	public AbstractPersonaggio getPersonaggio(){
+		return this.personaggio;
+	}
+	
+	public void setPersonaggio(AbstractPersonaggio personaggio) {
+		this.personaggio = personaggio;
+	}
+	
+	public Stanza stanzaAdiacenteConMinMaxNumeroDiOggetti(Map<String, Stanza> stanzeAdiacenti, boolean tipoDiStanza) {
+		List<Stanza> listaStanzaAdiacenti = new ArrayList<>();
+		listaStanzaAdiacenti.addAll(stanzeAdiacenti.values());
+		Collections.sort(listaStanzaAdiacenti, new Comparator<Stanza>() {
+			@Override
+			public int compare(Stanza s1, Stanza s2) {
+				return s1.getAttrezzi().size() - s2.getAttrezzi().size();
+			}
+		});
+		if(tipoDiStanza)
+			return listaStanzaAdiacenti.getFirst();
+		else
+			return listaStanzaAdiacenti.getLast();
+		
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o==null || this.getClass() != o.getClass())
+			return false;
+		Stanza that = (Stanza) o;
+		return this.getNome().equals(that.getNome());
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.getClass().hashCode() + this.getNome().hashCode();
 	}
 
 }

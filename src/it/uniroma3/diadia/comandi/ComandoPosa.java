@@ -3,16 +3,21 @@ package it.uniroma3.diadia.comandi;
 import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.Partita;
 
-public class ComandoPosa implements Comando{
+public class ComandoPosa extends AbstractComando{
 	
-	private String nomeOggetto;
 	
 	
 	public ComandoPosa(String nomeOggetto) {
-		this.nomeOggetto = nomeOggetto;
+		super.setParametro(nomeOggetto);
 	}
+	
+	public ComandoPosa() {
+		this(null);
+	}
+	
 	@Override
 	public void esegui(Partita partita, IO console) {
+		String nomeOggetto = super.getParametro();
 		if(nomeOggetto==null) {
 			console.mostraMessaggio("Che oggetto vuoi posare?");
 			nomeOggetto = console.leggiRiga();
@@ -26,20 +31,12 @@ public class ComandoPosa implements Comando{
 		}		
 	}
 
-	@Override
-	public void setParametro(String parametro) {
-		this.nomeOggetto = parametro;
-		
-	}
 
 	@Override
 	public String getNome() {
 		return "posa";
 	}
 
-	@Override
-	public String getParametro() {
-		return nomeOggetto;
-	}
+	
 
 }
