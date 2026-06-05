@@ -10,13 +10,6 @@ public abstract class AbstractPersonaggio {
 	private boolean haSalutato;
 	public Attrezzo attrezzo;
 
-	public Attrezzo getAttrezzo() {
-		return attrezzo;
-	}
-
-	public void setAttrezzo(Attrezzo attrezzo) {
-		this.attrezzo = attrezzo;
-	}
 
 	public AbstractPersonaggio(String nome, String presentaz) {
 		this.nome = nome;
@@ -30,6 +23,14 @@ public abstract class AbstractPersonaggio {
 
 	public boolean haSalutato() {
 		return this.haSalutato;
+	}
+	
+	public Attrezzo getAttrezzo() {
+		return attrezzo;
+	}
+
+	public void setAttrezzo(Attrezzo attrezzo) {
+		this.attrezzo = attrezzo;
 	}
 
 	public String saluta() {

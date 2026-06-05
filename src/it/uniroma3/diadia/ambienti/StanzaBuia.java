@@ -18,6 +18,23 @@ public class StanzaBuia extends Stanza{
 			return "Qui c'e' un buio pesto";
 	}
 	
+	public String getOggettoLuminoso(){
+		return this.oggettoLuminoso;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o==null || !this.getClass().equals(o.getClass()))
+			return false;
+		StanzaBuia that = (StanzaBuia) o;
+		return this.getNome().equals(that.getNome()) && this.getOggettoLuminoso().equals(that.getOggettoLuminoso());
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.getNome().hashCode() + this.getOggettoLuminoso().hashCode();
+	}
+	
 	
 
 }

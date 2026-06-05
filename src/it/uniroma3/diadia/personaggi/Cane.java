@@ -33,6 +33,11 @@ public class Cane extends AbstractPersonaggio{
 		}
 	}
 	
+	@Override
+	public String saluta() {
+		return MESSAGGIO_PRESENTAZIONE;
+	}
+	
 	
 
 }

@@ -11,7 +11,7 @@ public class LabirintoBuilder extends Labirinto{
 	private Map<String, Stanza> mappaStanze;
 
 	public LabirintoBuilder() {
-		super(true);
+		super();
 		this.mappaStanze = new HashMap<>();
 	}
 
@@ -42,6 +42,12 @@ public class LabirintoBuilder extends Labirinto{
 		if(this.ultimaStanzaAggiornata != null) {
 			this.ultimaStanzaAggiornata.addAttrezzo(new Attrezzo(nomeAttrezzo, peso));
 		}
+		return this;
+	}
+	
+	public LabirintoBuilder addAttrezzoAStanza(String nomeAttrezzo, int peso, String nomeStanza) {
+		if(this.mappaStanze.containsKey(nomeStanza))
+			this.mappaStanze.get(nomeStanza).addAttrezzo(new Attrezzo(nomeAttrezzo, peso));
 		return this;
 	}
 	
@@ -80,5 +86,18 @@ public class LabirintoBuilder extends Labirinto{
 		this.mappaStanze.put(nomeStanzaBuia, nuovaStanzaBuia);
 		this.ultimaStanzaAggiornata = nuovaStanzaBuia;
 		return this;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o==null)
+			return false;
+		LabirintoBuilder that = (LabirintoBuilder) o;
+		return this.getListaStanze().equals(that.getListaStanze());
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.getListaStanze().hashCode();
 	}
 }

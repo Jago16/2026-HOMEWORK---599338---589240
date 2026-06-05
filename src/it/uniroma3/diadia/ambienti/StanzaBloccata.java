@@ -31,6 +31,29 @@ public class StanzaBloccata extends Stanza{
 		}
 	}
 	
+	public String getDirezioneBloccata() {
+		return this.direzioneBloccata;
+	}
+	
+	public String getNomeAttrezzoSbloccante() {
+		return this.nomeAttrezzoSbloccante;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o==null || !this.getClass().equals(o.getClass()))
+			return false;
+		StanzaBloccata that = (StanzaBloccata) o;
+		return this.getNome().equals(that.getNome()) && this.getDirezioneBloccata().equals(that.getDirezioneBloccata())
+				&& this.getNomeAttrezzoSbloccante().equals(that.getNomeAttrezzoSbloccante());
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.getNome().hashCode() + this.getNomeAttrezzoSbloccante().hashCode() + 
+				this.getDirezioneBloccata().hashCode();
+	}
+	
 	
 	
 }
