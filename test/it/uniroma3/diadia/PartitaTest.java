@@ -5,42 +5,46 @@ import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.giocatore.Giocatore;
 
 class PartitaTest {
-	private Partita partitaNuova;
+	private Partita partitaVuota;
 	private Partita partitaIniziata;
 	private Partita partitaVinta;
 	private Partita partitaPersa;
-	private Stanza stanzaCorrente;
 	private Giocatore giocatoreW;
 	private Giocatore giocatoreL;
-	private Stanza stanzaVincente;
+	
 	
 	
 	@BeforeEach
 	void setUp(){
-		this.partitaIniziata = new Partita();
-		this.partitaNuova = new Partita();
-		this.partitaVinta = new Partita();
-		this.partitaPersa = new Partita();
-		this.stanzaCorrente = new Stanza("N11");
-		this.stanzaVincente = new Stanza("Biblioteca");
+		
+		Labirinto labirintoPartitaIniziata = Labirinto.newBuilder().addStanzaIniziale("StanzaCorrente")
+				.addStanzaVincente("StanzaVincente").getLabirinto();
+		Labirinto labirintoPartitaVinta = Labirinto.newBuilder().addStanzaIniziale("StanzaCorrente")
+				.addStanzaVincente("StanzaCorrente").getLabirinto();
+		Labirinto labirintoPartitaPersa = Labirinto.newBuilder().addStanzaIniziale("StanzaCorrente")
+				.addStanzaVincente("StanzaVincente").getLabirinto();
+		this.partitaIniziata = new Partita(labirintoPartitaIniziata);
+		this.partitaVuota = new Partita(Labirinto.newBuilder().getLabirinto()); 
+		this.partitaVinta = new Partita(labirintoPartitaVinta);
+		this.partitaPersa = new Partita(labirintoPartitaPersa);
 		this.giocatoreW = new Giocatore();
 		this.giocatoreL = new Giocatore();
-		this.partitaIniziata.setStanzaCorrente(stanzaCorrente);
 		this.giocatoreL.setCfu(0);
 		this.partitaPersa.setGiocatore(giocatoreL);
 		this.partitaVinta.setFinita();
 		this.partitaPersa.setFinita();
 		this.partitaVinta.setGiocatore(giocatoreW);
-		this.partitaVinta.setStanzaCorrente(this.stanzaVincente);
+		this.partitaVinta.setStanzaCorrente(new Stanza("StanzaVincente"));
 	}
 
 	@Test
-	public void testVinta_PartitaNuova_Falso() {
-		assertFalse(this.partitaNuova.vinta());
+	public void testVinta_PartitaVuota_Vera() {
+		assertTrue(this.partitaVuota.vinta());
 	}
 	@Test
 	public void testVinta_PartitaIniziata_Falso() {
@@ -48,7 +52,7 @@ class PartitaTest {
 	}
 	@Test
 	public void testVinta_PartitaVinta_Vero() {
-		assertEquals("Biblioteca", this.partitaVinta.getStanzaCorrente().getNome());
+		assertEquals("StanzaVincente", this.partitaVinta.getStanzaCorrente().getNome());
 		//da modificare quando potremo ottenere l'indirizzo della stanza vincente di Labirinto
 	}
 	@Test
@@ -56,11 +60,11 @@ class PartitaTest {
 		assertFalse(this.partitaPersa.vinta());
 	}
 	@Test
-	public void testFinita_PartitaNuova_Falso() {
-		assertFalse(this.partitaNuova.isFinita());
+	public void testFinita_PartitaVuota_Vero() {
+		assertTrue(this.partitaVuota.isFinita());
 	}
 	@Test
-	public void testFinita_PartitaVints_Vero() {
+	public void testFinita_PartitaVinta_Vero() {
 		assertTrue(this.partitaVinta.isFinita());
 	}
 	@Test
@@ -68,20 +72,20 @@ class PartitaTest {
 		assertTrue(this.partitaPersa.isFinita());
 	}
 	@Test
-	public void testGetStanzaCorrente_PartitsNuova() {
-		assertEquals("Atrio", this.partitaNuova.getStanzaCorrente().getNome());
+	public void testGetStanzaCorrente_PartitaNuova() {
+		assertNull(this.partitaVuota.getStanzaCorrente());
 	}
 	@Test
 	public void testGetStanzaCorrente_PartitaIniziata() {
-		assertEquals(this.stanzaCorrente, this.partitaIniziata.getStanzaCorrente());
+		assertEquals(new Stanza("StanzaCorrente"), this.partitaIniziata.getStanzaCorrente());
 	}
 	@Test
 	public void testGetStanzaCorrente_PartitaVinta() {
-		assertEquals("Biblioteca", this.partitaVinta.getStanzaCorrente().getNome());
+		assertEquals("StanzaVincente", this.partitaVinta.getStanzaCorrente().getNome());
 	}
 	@Test
 	public void testGetGiocatore_PartitaNuova() {
-		assertNotNull(this.partitaNuova.getGiocatore());
+		assertNotNull(this.partitaVuota.getGiocatore());
 	}
 	@Test
 	public void testGetGiocatore_PartitaVinta() {

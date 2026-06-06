@@ -27,9 +27,6 @@ public class Partita {
 		this.finita = false;
 	}
 	
-	public Partita(){
-		this(new Labirinto());
-	}
 
 
 

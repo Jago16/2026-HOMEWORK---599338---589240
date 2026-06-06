@@ -10,11 +10,11 @@ public class Mago extends AbstractPersonaggio{
 			"per il tuo borsone!";
 	private static final String MESSAGGIO_SCUSE = "Mi spiace, ma non ho piu' nulla...";
 	private static final String MESSAGGIO_PRESENTAZIONE = "Sono un mago e se mi saluterai ti darò un dono";
-	private Attrezzo attrezzo;
+	
 
 	public Mago(String nome, Attrezzo attrezzo) {
 		super(nome, MESSAGGIO_PRESENTAZIONE);
-		this.attrezzo = attrezzo;
+		this.setAttrezzo(attrezzo);
 	}
 
 	@Override
@@ -41,5 +41,18 @@ public class Mago extends AbstractPersonaggio{
 					"-Il mago ha poggiato di nuovo l'attrezzo nella stanza, ma ora ha il peso dimezzato!-";
 		}
 		return null;
+	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o==null || this.getClass() != o.getClass())
+			return false;
+		Mago that = (Mago) o;
+		return this.getNome().equals(that.getNome()) && this.getAttrezzo().equals(that.getAttrezzo());
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.getClass().hashCode() + this.getNome().hashCode() + this.getAttrezzo().hashCode();
 	}
 }

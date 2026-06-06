@@ -12,8 +12,9 @@ import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.IOSimulator;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Direzione;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
+
 
 class ComandoAiutoTest {
 
@@ -28,9 +29,9 @@ class ComandoAiutoTest {
 		List <String> comandi = new ArrayList<>();
 		comandi.add("aiuto");
 		this.console = new IOSimulator(comandi);
-		this.monolocale = new LabirintoBuilder().addStanzaIniziale("Atrio");
-		this.bilocale = new LabirintoBuilder().addStanzaIniziale("Inizio").addStanza("Fine").
-				addAdiacenza("Inizio", "Fine", "nord");
+		this.monolocale = Labirinto.newBuilder().addStanzaIniziale("Atrio").getLabirinto();
+		this.bilocale =Labirinto.newBuilder().addStanzaIniziale("Inizio").addStanza("Fine").
+				addAdiacenza("Inizio", "Fine", Direzione.SUD).getLabirinto();
 		this.factory = new FabbricaDiComandiFisarmonica();
 	}
 

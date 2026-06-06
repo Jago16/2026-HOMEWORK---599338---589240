@@ -4,13 +4,14 @@ import java.io.*;
 import java.util.*;
 
 import it.uniroma3.diadia.FormatoFileNonValidoException;
+import it.uniroma3.diadia.ambienti.Labirinto.LabirintoBuilder;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 import it.uniroma3.diadia.personaggi.Cane;
 import it.uniroma3.diadia.personaggi.Mago;
 import it.uniroma3.diadia.personaggi.Strega;
 
 
-public class CaricatoreLabirinto extends LabirintoBuilder{
+public class CaricatoreLabirinto{
 
 	/* prefisso di una singola riga di testo contenente tutti i nomi delle stanze */
 	private static final String STANZE_MARKER = "Stanze:";             
@@ -48,15 +49,18 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 
 	 */
 	private LineNumberReader reader;
+	private Labirinto.LabirintoBuilder builder;
 
 
 
 	public CaricatoreLabirinto(String nomeFile) throws FileNotFoundException {
 		this.reader = new LineNumberReader(new FileReader(nomeFile));
+		builder = Labirinto.newBuilder();
 	}
 
 	public CaricatoreLabirinto(Reader reader) { //Per i test
 		this.reader = new LineNumberReader(reader);
+		builder = Labirinto.newBuilder();
 	}
 
 	public void carica() throws FormatoFileNonValidoException {
@@ -93,8 +97,14 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 						check(scanner.hasNext(), msgTerminazionePrecoce("Attrezzo sbloccante"));
 						String nomeAttrezzo = scanner.next();
 						check(scanner.hasNext(), msgTerminazionePrecoce("Direzione bloccata"));
-						String direzioneBloccata = scanner.next();
-						this.addStanzaBloccata(nomeStanza, direzioneBloccata, nomeAttrezzo);
+						String direzioneStringa = scanner.next();
+						try {
+
+							Direzione direzioneBloccata = Direzione.valueOf(direzioneStringa.toUpperCase());
+							this.builder.addStanzaBloccata(nomeStanza, nomeAttrezzo, direzioneBloccata);
+						} catch (IllegalArgumentException e) {
+							check(false, "Direzione non valida nel file: " + direzioneStringa);
+						}
 					}
 				}
 				riga = this.reader.readLine();
@@ -116,7 +126,7 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 						String nomeStanza = scanner.next();
 						check(scanner.hasNext(), msgTerminazionePrecoce("Attrezzo luminoso"));
 						String nomeAttrezzo = scanner.next();
-						this.addStanzaBuia(nomeStanza, nomeAttrezzo);
+						this.builder.addStanzaBuia(nomeStanza, nomeAttrezzo);
 					}
 				}
 				riga = this.reader.readLine();
@@ -141,7 +151,7 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 						int sogliaMagica;
 						try {
 							sogliaMagica = Integer.parseInt(sogliaMagicaStringa);
-							this.addStanzaMagica(nomeStanza, sogliaMagica);
+							this.builder.addStanzaMagica(nomeStanza, sogliaMagica);
 						}catch (NumberFormatException e) {
 							check(false, "Soglia magica non valida");
 						}
@@ -258,7 +268,7 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 			String primaParola = this.leggiPrimaParola(riga);
 			while(riga!=null && !primaParola.equals(ESTREMI_MARKER)) {
 				if(!primaParola.isEmpty())
-					this.addStanza(primaParola);
+					this.builder.addStanza(primaParola);
 				riga = this.reader.readLine();
 				primaParola = this.leggiPrimaParola(riga);
 			}
@@ -299,11 +309,11 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 			String riga = this.reader.readLine();
 			String stanzaIniziale = this.leggiPrimaParola(riga);
 			check(stanzaIniziale!=null, "Non è presente una stanza iniziale.");
-			this.addStanzaIniziale(stanzaIniziale);
+			this.builder.addStanzaIniziale(stanzaIniziale);
 			riga = this.reader.readLine();
 			String stanzaVincente = this.leggiPrimaParola(riga);
 			check(stanzaVincente!=null, "Non è presente una stanza vincente");
-			this.addStanzaVincente(stanzaVincente);
+			this.builder.addStanzaVincente(stanzaVincente);
 		} catch(IOException e){
 			throw new FormatoFileNonValidoException(e.getMessage());
 		}
@@ -363,7 +373,7 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 		try {
 			peso = Integer.parseInt(pesoAttrezzo);
 			check(isStanzaValida(nomeStanza),"Attrezzo "+ nomeAttrezzo+" non collocabile: stanza " +nomeStanza+" inesistente");
-			this.addAttrezzoAStanza(nomeAttrezzo, peso, nomeStanza);
+			this.builder.addAttrezzoAStanza(nomeAttrezzo, peso, nomeStanza);
 		}
 		catch (NumberFormatException e) {
 			check(false, "Peso attrezzo "+nomeAttrezzo+" non valido");
@@ -378,7 +388,7 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 			check(isStanzaValida(nomeStanza), "Cane "+ nomeCane+" non collocabile: stanza " +nomeStanza+" inesistente");
 			Attrezzo attrezzoCane = new Attrezzo(nomeAttrezzo, peso);
 			Cane caneCorrente = new Cane(nomeCane, attrezzoCane);
-			this.getListaStanze().get(nomeStanza).setPersonaggio(caneCorrente);
+			this.builder.getListaStanze().get(nomeStanza).setPersonaggio(caneCorrente);
 		}catch(NumberFormatException e) {
 			check(false, "Peso attrezzo "+nomeAttrezzo+" non valido");
 		}
@@ -392,7 +402,7 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 			check(isStanzaValida(nomeStanza), "Mago "+ nomeMago+" non collocabile: stanza " +nomeStanza+" inesistente");
 			Attrezzo attrezzoMago = new Attrezzo(nomeAttrezzo, peso);
 			Mago magoCorrente = new Mago(nomeMago, attrezzoMago);
-			this.getListaStanze().get(nomeStanza).setPersonaggio(magoCorrente);
+			this.builder.getListaStanze().get(nomeStanza).setPersonaggio(magoCorrente);
 		}catch(NumberFormatException e) {
 			check(false, "Peso attrezzo "+nomeAttrezzo+" non valido");
 		}
@@ -401,12 +411,12 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 	private void inserisciStrega(String nomeStrega, String nomeStanza) throws FormatoFileNonValidoException{
 		check(isStanzaValida(nomeStanza), "Strega "+ nomeStrega+" non collocabile: stanza " +nomeStanza+" inesistente");
 		Strega stregaCorrente = new Strega(nomeStrega);
-		this.getListaStanze().get(nomeStanza).setPersonaggio(stregaCorrente);
+		this.builder.getListaStanze().get(nomeStanza).setPersonaggio(stregaCorrente);
 	}
 
 
 	private boolean isStanzaValida(String nomeStanza) {
-		return this.getListaStanze().containsKey(nomeStanza);
+		return this.builder.getListaStanze().containsKey(nomeStanza);
 	}
 
 	private void leggiEImpostaUscite() throws FormatoFileNonValidoException {
@@ -417,10 +427,15 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 				try(Scanner scanner = new Scanner(riga)){
 					String stanzaPartenza = scanner.next();
 					check(scanner.hasNext(), msgTerminazionePrecoce("Stanza di partenza"));
-					String direzione = scanner.next();
+					String direzioneStringa = scanner.next();
 					check(scanner.hasNext(), msgTerminazionePrecoce("direzione della stanza adiacente"));
 					String stanzaArrivo = scanner.next();
-					impostaUscita(stanzaPartenza, direzione, stanzaArrivo);
+					try {
+						Direzione direzione = Direzione.valueOf(direzioneStringa.toUpperCase());
+						impostaUscita(stanzaPartenza, direzione, stanzaArrivo);
+					}catch(IllegalArgumentException e) {
+						check(false, "direzione non valida");
+					}
 				}
 				riga = this.reader.readLine();
 				primaParola = this.leggiPrimaParola(riga);	
@@ -449,10 +464,10 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 		return "Terminazione precoce del file prima di leggere "+msg;
 	}
 
-	private void impostaUscita(String stanzaDa, String dir, String nomeA) throws FormatoFileNonValidoException {
+	private void impostaUscita(String stanzaDa, Direzione dir, String nomeA) throws FormatoFileNonValidoException {
 		check(isStanzaValida(stanzaDa),"Stanza di partenza sconosciuta "+dir);
 		check(isStanzaValida(nomeA),"Stanza di destinazione sconosciuta "+ dir);
-		this.addAdiacenza(stanzaDa, nomeA, dir);
+		this.builder.addAdiacenza(stanzaDa, nomeA, dir);
 	}
 
 
@@ -461,13 +476,15 @@ public class CaricatoreLabirinto extends LabirintoBuilder{
 			throw new FormatoFileNonValidoException("Formato file non valido [" + this.reader.getLineNumber() + "] "+messaggioErrore);		
 	}
 
-	@Override
 	public Stanza getStanzaIniziale() {
-		return super.getStanzaIniziale();
+		return builder.getLabirinto().getStanzaIniziale();
 	}
 
-	@Override
 	public Stanza getStanzaVincente() {
-		return super.getStanzaVincente();
+		return builder.getLabirinto().getStanzaVincente();
+	}
+	
+	public LabirintoBuilder getLabirintoBuilder() {
+		return this.builder;
 	}
 }

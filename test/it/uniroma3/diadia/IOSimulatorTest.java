@@ -8,8 +8,9 @@ import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.ambienti.Direzione;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
+
 
 class IOSimulatorTest {
 
@@ -18,7 +19,7 @@ class IOSimulatorTest {
 	@BeforeEach
 
 	void setUp() {
-		this.labirintoAttuale = new LabirintoBuilder()
+		this.labirintoAttuale = Labirinto.newBuilder()
 				.addStanzaIniziale("Atrio")
 				.addAttrezzo("osso", 1)
 				.addStanzaVincente("Biblioteca")
@@ -26,18 +27,18 @@ class IOSimulatorTest {
 				.addStanza("Aula N10")
 				.addAttrezzo("lanterna", 3)
 				.addStanza("Laboratorio Campus")
-				.addAdiacenza("Atrio", "Biblioteca", "nord")
-				.addAdiacenza("Atrio", "Aula N11", "est")
-				.addAdiacenza("Atrio", "Aula N10", "sud")
-				.addAdiacenza("Atrio", "Laboratorio Campus", "ovest")
-				.addAdiacenza("Aula N11", "Laboratorio Campus", "est")
-				.addAdiacenza("Aula N11", "Atrio", "ovest")
-				.addAdiacenza("Aula N10", "Atrio", "nord")
-				.addAdiacenza("Aula N10", "Aula N11", "est")
-				.addAdiacenza("Aula N10", "Laboratorio Campus", "ovest")
-				.addAdiacenza("Laboratorio Campus", "Atrio", "est")
-				.addAdiacenza("Laboratorio Campus", "Aula N11", "ovest")
-				.addAdiacenza("Biblioteca", "Atrio", "sud")
+				.addAdiacenza("Atrio", "Biblioteca", Direzione.NORD)
+				.addAdiacenza("Atrio", "Aula N11", Direzione.EST)
+				.addAdiacenza("Atrio", "Aula N10", Direzione.SUD)
+				.addAdiacenza("Atrio", "Laboratorio Campus", Direzione.OVEST)
+				.addAdiacenza("Aula N11", "Laboratorio Campus", Direzione.EST)
+				.addAdiacenza("Aula N11", "Atrio", Direzione.OVEST)
+				.addAdiacenza("Aula N10", "Atrio", Direzione.NORD)
+				.addAdiacenza("Aula N10", "Aula N11", Direzione.EST)
+				.addAdiacenza("Aula N10", "Laboratorio Campus", Direzione.OVEST)
+				.addAdiacenza("Laboratorio Campus", "Atrio", Direzione.EST)
+				.addAdiacenza("Laboratorio Campus", "Aula N11", Direzione.OVEST)
+				.addAdiacenza("Biblioteca", "Atrio", Direzione.SUD)
 				.getLabirinto();
 	}
 

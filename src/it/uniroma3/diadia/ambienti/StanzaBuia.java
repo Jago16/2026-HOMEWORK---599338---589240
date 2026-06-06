@@ -24,7 +24,7 @@ public class StanzaBuia extends Stanza{
 	
 	@Override
 	public boolean equals(Object o) {
-		if(o==null || !this.getClass().equals(o.getClass()))
+		if(o==null || this.getClass()!=o.getClass())
 			return false;
 		StanzaBuia that = (StanzaBuia) o;
 		return this.getNome().equals(that.getNome()) && this.getOggettoLuminoso().equals(that.getOggettoLuminoso());
@@ -32,7 +32,7 @@ public class StanzaBuia extends Stanza{
 	
 	@Override
 	public int hashCode() {
-		return this.getNome().hashCode() + this.getOggettoLuminoso().hashCode();
+		return this.getNome().hashCode() + this.getOggettoLuminoso().hashCode() + this.getClass().hashCode();
 	}
 	
 	

@@ -38,6 +38,18 @@ public class Cane extends AbstractPersonaggio{
 		return MESSAGGIO_PRESENTAZIONE;
 	}
 	
+	@Override
+	public boolean equals(Object o) {
+		if(o==null || this.getClass() != o.getClass())
+			return false;
+		Cane that = (Cane) o;
+		return this.getNome().equals(that.getNome()) && this.getAttrezzo().equals(that.getAttrezzo());
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.getClass().hashCode() + this.getNome().hashCode() + this.getAttrezzo().hashCode();
+	}
 	
 
 }

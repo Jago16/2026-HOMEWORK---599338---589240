@@ -8,6 +8,12 @@ import java.util.Collections;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import it.uniroma3.diadia.ambienti.Labirinto.LabirintoBuilder;
+import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.personaggi.Cane;
+import it.uniroma3.diadia.personaggi.Mago;
+import it.uniroma3.diadia.personaggi.Strega;
+
 
 class CaricatoreLabirintoTest {
 
@@ -97,12 +103,12 @@ class CaricatoreLabirintoTest {
 	
 	@Test
 	void testMonolocaPosizionamentoOggetto_presente() {
-		assertTrue(this.caricatoreMonolocale.getListaStanze().get("Atrio").hasAttrezzo("Osso"));
+		assertTrue(this.caricatoreMonolocale.getLabirintoBuilder().getListaStanze().get("Atrio").hasAttrezzo("Osso"));
 	}
 	
 	@Test
 	void testMonolocaPosizionamentoOggetto_nonPresente() {
-		assertFalse(this.caricatoreMonolocale.getListaStanze().get("Atrio").hasAttrezzo("Lanterna"));
+		assertFalse(this.caricatoreMonolocale.getLabirintoBuilder().getListaStanze().get("Atrio").hasAttrezzo("Lanterna"));
 	}
 
 	@Test
@@ -133,21 +139,46 @@ class CaricatoreLabirintoTest {
 	
 	@Test
 	void testBilocaleInteroLabirinto() {
-		LabirintoBuilder labirintoExpected = new LabirintoBuilder();
+		LabirintoBuilder labirintoExpected = Labirinto.newBuilder();
 		labirintoExpected.addStanzaIniziale("N10").addAttrezzo("Osso", 5).addStanzaVincente("Biblioteca")
-		.addAdiacenza("N10", "Biblioteca", "nord").addAdiacenza("Biblioteca", "N10", "sud");
-		assertEquals(labirintoExpected, this.caricatoreBilocale.getLabirinto());
+		.addAdiacenza("N10", "Biblioteca", Direzione.NORD).addAdiacenza("Biblioteca", "N10", Direzione.SUD);
+		assertEquals(labirintoExpected, this.caricatoreBilocale.getLabirintoBuilder());
 	}
 	
 	@Test
 	void testInserimentoStanzaBuia() {
 		StanzaBuia stanzaBuia = new StanzaBuia("N11", "Lanterna");
-		assertEquals(stanzaBuia, this.caricatoreLabirintoCompleto.getListaStanze().get("N11"));
+		assertEquals(stanzaBuia, this.caricatoreLabirintoCompleto.getLabirintoBuilder().getListaStanze().get("N11"));
 	}
 	
 	@Test
 	void testInserimentoStanzaBloccata() {
-		StanzaBloccata stanzaBloccata = new StanzaBloccata("Campus", "Chiave", "sud");
-		assertEquals(stanzaBloccata, this.caricatoreLabirintoCompleto.getListaStanze().get("Campus"));
+		StanzaBloccata stanzaBloccata = new StanzaBloccata("Campus", Direzione.SUD, "Chiave");
+		assertEquals(stanzaBloccata, this.caricatoreLabirintoCompleto.getLabirintoBuilder().getListaStanze().get("Campus"));
 	}
+	
+	@Test
+	void testInserimentoStanzaMagica() {
+		StanzaMagica stanzaMagica = new StanzaMagica("Atrio", 10);
+		assertEquals(stanzaMagica, this.caricatoreLabirintoCompleto.getLabirintoBuilder().getListaStanze().get("Atrio"));
+	}
+	
+	@Test
+	void testInserimentoCane() {
+		Cane caneTest = new Cane("Fido", new Attrezzo("Osso", 5));
+		assertEquals(caneTest, this.caricatoreLabirintoCompleto.getLabirintoBuilder().getListaStanze().get("N10").getPersonaggio());
+	}
+	
+	@Test
+	void testInserimentoMago() {
+		Mago magoTest = new Mago("Mario", new Attrezzo("Staffa", 5));
+		assertEquals(magoTest, this.caricatoreLabirintoCompleto.getLabirintoBuilder().getListaStanze().get("Atrio").getPersonaggio());
+	}
+	
+	@Test
+	void testInserimentoStrega() {
+		Strega stregaTest = new Strega("Caterina");
+		assertEquals(stregaTest, this.caricatoreLabirintoCompleto.getLabirintoBuilder().getListaStanze().get("Biblioteca").getPersonaggio());
+	}
+	
 }

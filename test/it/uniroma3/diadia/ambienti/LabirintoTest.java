@@ -9,13 +9,18 @@ class LabirintoTest {
 	private Labirinto labirinto;
 	private Labirinto labirinto2;
 	private Stanza stanzaIniziale2;
-	
+
 	@BeforeEach
 	void setUp(){
-		this.labirinto = new Labirinto();
-		this.labirinto2 = new Labirinto();
-		this.stanzaIniziale2 = new Stanza("N11");
-		this.labirinto2.setStanzaIniziale(stanzaIniziale2);
+		this.labirinto = Labirinto.newBuilder()
+				.addStanzaIniziale("Atrio")
+				.addStanzaVincente("Biblioteca")
+				.getLabirinto();
+		this.labirinto2 = Labirinto.newBuilder()
+				.addStanzaIniziale("N11")
+				.addStanzaVincente("Biblioteca")
+				.getLabirinto();
+		this.stanzaIniziale2 = this.labirinto2.getStanzaIniziale();
 	}
 
 	@Test

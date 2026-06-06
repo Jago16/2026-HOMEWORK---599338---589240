@@ -17,33 +17,33 @@ class StanzaBloccataTest {
 	@BeforeEach
 	void setUp() {
 		this.generica = new Stanza("atrio");
-		this.bloccata = new StanzaBloccata("n11", "sud", "chiave");
-		this.conChiave = new StanzaBloccata("n12", "nord", "chiave");
+		this.bloccata = new StanzaBloccata("n11", Direzione.SUD, "chiave");
+		this.conChiave = new StanzaBloccata("n12", Direzione.NORD, "chiave");
 		Attrezzo chiave = new Attrezzo("chiave", 1);
 		this.conChiave.addAttrezzo(chiave);
 		this.stanzaAd = new Stanza("Ad");
-		this.bloccata.impostaStanzaAdiacente("sud", this.stanzaAd);
-		this.conChiave.impostaStanzaAdiacente("nord", this.stanzaAd);
-		this.generica.impostaStanzaAdiacente("est", this.stanzaAd);
+		this.bloccata.impostaStanzaAdiacente(Direzione.SUD, this.stanzaAd);
+		this.conChiave.impostaStanzaAdiacente(Direzione.NORD, this.stanzaAd);
+		this.generica.impostaStanzaAdiacente(Direzione.EST, this.stanzaAd);
 		
 	}
 
 	@Test
 	void testGetStanzaAdiacenteBloccata() {
-		assertSame(this.bloccata, this.bloccata.getStanzaAdiacente("sud"));
+		assertSame(this.bloccata, this.bloccata.getStanzaAdiacente(Direzione.SUD));
 	}
 	@Test
 	void testGetStanzaAdiacenteConChiave() {
-		assertSame(stanzaAd, this.conChiave.getStanzaAdiacente("nord"));
+		assertSame(stanzaAd, this.conChiave.getStanzaAdiacente(Direzione.NORD));
 	}
 	@Test
 	void testGetStanzaAdiacenteGenerica() {
-		assertSame(this.stanzaAd, this.generica.getStanzaAdiacente("est"));
+		assertSame(this.stanzaAd, this.generica.getStanzaAdiacente(Direzione.EST));
 	}
 	
 	@Test
 	void testGetDescrizioneBloccata() {
-		assertEquals("La direzione " + "sud" + "sembra bloccata...\n" + this.bloccata.toString(), 
+		assertEquals("La direzione " + "sud " + "sembra bloccata...\n" + this.bloccata.toString(), 
 				this.bloccata.getDescrizione());
 		
 	}

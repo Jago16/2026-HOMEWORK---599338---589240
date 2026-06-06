@@ -10,8 +10,9 @@ import org.junit.jupiter.api.Test;
 
 import it.uniroma3.diadia.IOSimulator;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Direzione;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
+
 
 class ComandoGuardaTest {
 
@@ -26,9 +27,9 @@ class ComandoGuardaTest {
 		List <String> comandi = new ArrayList<>();
 		comandi.add("guarda");
 		this.console = new IOSimulator(comandi);
-		this.monolocale = new LabirintoBuilder().addStanzaIniziale("Atrio").addAttrezzo("osso", 1);
-		this.bilocale = new LabirintoBuilder().addStanzaIniziale("Inizio").addAttrezzo("osso", 1).addStanza("Fine").
-				addAdiacenza("Inizio", "Fine", "nord");
+		this.monolocale = Labirinto.newBuilder().addStanzaIniziale("Atrio").addAttrezzo("osso", 1).getLabirinto();
+		this.bilocale = Labirinto.newBuilder().addStanzaIniziale("Inizio").addAttrezzo("osso", 1).addStanza("Fine").
+				addAdiacenza("Inizio", "Fine", Direzione.NORD).getLabirinto();
 		this.factory = new FabbricaDiComandiFisarmonica();
 	}
 

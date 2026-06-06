@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -12,8 +13,8 @@ import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.IOSimulator;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Direzione;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 class ComandoPosaTest {
@@ -28,10 +29,11 @@ class ComandoPosaTest {
 	
 	@BeforeEach
 	void setUp(){
-		this.console = new IOConsole();
-		this.monolocale = new LabirintoBuilder().addStanzaIniziale("Atrio").addAttrezzo("osso", 1);
-		this.bilocale = new LabirintoBuilder().addStanzaIniziale("Inizio").addAttrezzo("osso", 1).addStanza("Fine").
-				addAdiacenza("Inizio", "Fine", "nord");
+		Scanner scannerTest = new Scanner("");
+		this.console = new IOConsole(scannerTest);
+		this.monolocale = Labirinto.newBuilder().addStanzaIniziale("Atrio").addAttrezzo("osso", 1).getLabirinto();
+		this.bilocale = Labirinto.newBuilder().addStanzaIniziale("Inizio").addAttrezzo("osso", 1).addStanza("Fine").
+				addAdiacenza("Inizio", "Fine", Direzione.NORD).getLabirinto();
 		this.factory = new FabbricaDiComandiFisarmonica();
 		this.torcia = new Attrezzo("torcia", 1);
 	}

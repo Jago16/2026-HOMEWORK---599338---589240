@@ -1,0 +1,17 @@
+Stanze:
+N10
+Biblioteca
+Estremi:
+N10
+Biblioteca
+Attrezzi:
+Osso 5 N10
+StanzeBloccate:
+StanzeBuie:
+StanzeMagiche:
+Uscite:
+N10 nord Biblioteca
+Biblioteca sud N10
+Cane:
+Mago:
+Strega:

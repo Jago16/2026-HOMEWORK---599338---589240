@@ -34,5 +34,18 @@ public class Strega extends AbstractPersonaggio{
 		}
 		return null;
 	}
+	
+	@Override
+	public boolean equals(Object o) {
+		if(o==null || this.getClass() != o.getClass())
+			return false;
+		Strega that = (Strega) o;
+		return this.getNome().equals(that.getNome());
+	}
+	
+	@Override
+	public int hashCode() {
+		return this.getClass().hashCode() + this.getNome().hashCode();
+	}
 
 }

@@ -88,36 +88,36 @@ class StanzaTest {
 	
 	@Test
 	public void testGetStanzaAdiacente_StanzaVuota() {
-		assertNull(this.vuota.getStanzaAdiacente("sud"));
+		assertNull(this.vuota.getStanzaAdiacente(Direzione.SUD));
 	}
 	@Test
 	public void testGetStanzaAdiacenteConDirezione_Presente() {
 		Stanza stanzaConUnaDirezione = new Stanza("stanzaConUnaDirezione");
-		stanzaConUnaDirezione.impostaStanzaAdiacente("sud", vuota);
-		assertEquals(vuota, stanzaConUnaDirezione.getStanzaAdiacente("sud")); 
+		stanzaConUnaDirezione.impostaStanzaAdiacente(Direzione.SUD, vuota);
+		assertEquals(vuota, stanzaConUnaDirezione.getStanzaAdiacente(Direzione.SUD)); 
 	}
 	@Test
 	public void testGetStanzaAdiacenteConDirezione_Assente() {
 		Stanza stanzaConUnaDirezione = new Stanza("stanzaConUnaDirezione");
-		stanzaConUnaDirezione.impostaStanzaAdiacente("sud", vuota);
-		assertNotEquals(vuota, stanzaConUnaDirezione.getStanzaAdiacente("nord"));
+		stanzaConUnaDirezione.impostaStanzaAdiacente(Direzione.SUD, vuota);
+		assertNotEquals(vuota, stanzaConUnaDirezione.getStanzaAdiacente(Direzione.NORD));
 	}
 	@Test
 	public void testImpostaStanzaAdiacente_StanzaSenzaStanzaAdiacenti() {
 		Stanza stanzaSenzaAdiacenti = new Stanza("stanzaSenzaAdiacenti");
-		assertNull(stanzaSenzaAdiacenti.getStanzaAdiacente("sud"));
+		assertNull(stanzaSenzaAdiacenti.getStanzaAdiacente(Direzione.SUD));
 	}
 	@Test
 	public void testImpostaStanzaAdiacente_Presente() {
 		Stanza stanzaConAdiacenteSud = new Stanza("stanzaConAdiacenteSud");
-		stanzaConAdiacenteSud.impostaStanzaAdiacente("sud", vuota);
-		assertEquals(vuota, stanzaConAdiacenteSud.getStanzaAdiacente("sud"));
+		stanzaConAdiacenteSud.impostaStanzaAdiacente(Direzione.SUD, vuota);
+		assertEquals(vuota, stanzaConAdiacenteSud.getStanzaAdiacente(Direzione.SUD));
 	}
 	@Test
 	public void testImpostaStanzaAdiacente_Assente() {
-		Stanza stanzaConAdiacenteSud = new Stanza("stanzaConAdiacenteSud");
-		stanzaConAdiacenteSud.impostaStanzaAdiacente("sud", vuota);
-		assertNotEquals(vuota, stanzaConAdiacenteSud.getStanzaAdiacente("nord"));
+		Stanza stanzaConAdiacenteNord = new Stanza("stanzaConAdiacenteNord");
+		stanzaConAdiacenteNord.impostaStanzaAdiacente(Direzione.NORD, vuota);
+		assertNull( stanzaConAdiacenteNord.getStanzaAdiacente(Direzione.SUD));
 	}
 	
 	

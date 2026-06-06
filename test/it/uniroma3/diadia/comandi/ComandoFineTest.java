@@ -2,14 +2,17 @@ package it.uniroma3.diadia.comandi;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Scanner;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
 import it.uniroma3.diadia.Partita;
+import it.uniroma3.diadia.ambienti.Direzione;
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.LabirintoBuilder;
+
 
 class ComandoFineTest {
 
@@ -21,10 +24,11 @@ class ComandoFineTest {
 	
 	@BeforeEach
 	void setUp(){
-		this.console = new IOConsole();
-		this.monolocale = new LabirintoBuilder().addStanzaIniziale("Atrio");
-		this.bilocale = new LabirintoBuilder().addStanzaIniziale("Inizio").addStanza("Fine").
-				addAdiacenza("Inizio", "Fine", "nord");
+		Scanner scannerTest = new Scanner("");
+		this.console = new IOConsole(scannerTest);
+		this.monolocale = Labirinto.newBuilder().addStanzaIniziale("Atrio").getLabirinto();
+		this.bilocale = Labirinto.newBuilder().addStanzaIniziale("Inizio").addStanza("Fine").
+				addAdiacenza("Inizio", "Fine", Direzione.NORD).getLabirinto();
 		this.factory = new FabbricaDiComandiFisarmonica();
 	}
 
